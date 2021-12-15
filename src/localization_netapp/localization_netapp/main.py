@@ -1,6 +1,6 @@
 import rclpy
-from .evolvedApi.cellid_node import CellidNode
-from .evolvedApi import endpoint as ep
+from .cellid_node import CellidNode
+from evolvedApi import endpoint as ep
 from multiprocessing import Process
 import uvicorn
 import time
