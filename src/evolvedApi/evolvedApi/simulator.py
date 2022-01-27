@@ -1,68 +1,38 @@
+from evolved5g import swagger_client
+from evolved5g.swagger_client import LoginApi, User
+from evolved5g.swagger_client.models import Token
 import requests, json
-from datetime import datetime, timedelta
 
 
-class SimulatorAPI(object):
-    """
-        This class provides a python API wrapper for the NEF simulator
-    """
+def get_token() -> Token:
+    username = "admin@my-email.com"
+    password = "pass"
+    # User name and pass matches are set in the .env of the docker of NEF_EMULATOR. See
+    # https://github.com/EVOLVED-5G/NEF_emulator
+    configuration = swagger_client.Configuration()
+    # The host of the 5G API (emulator)
+    configuration.host = get_host_of_the_nef_emulator()
+    api_client = swagger_client.ApiClient(configuration=configuration)
+    api_client.select_header_content_type(["application/x-www-form-urlencoded"])
+    api = LoginApi(api_client)
+    token = api.login_access_token_api_v1_login_access_token_post("", username, password, "", "", "")
+    return token
 
-    def __init__(self):
-        """
-        Save login token
-        """
-        self.token = self.access()
 
-    def access(self) -> str:
-        """
-        Login in the simulator
-        :return: login token
-        """
-        response = requests.post("http://localhost:8888/api/v1/login/access-token", data=
-        {
-            'username': 'admin@my-email.com',
-            'password': 'pass'
-        })
+def get_api_client(token) -> swagger_client.ApiClient:
+    configuration = swagger_client.Configuration()
+    configuration.host = get_host_of_the_nef_emulator()
+    configuration.access_token = token.access_token
+    api_client = swagger_client.ApiClient(configuration=configuration)
+    return api_client
 
-        jsonfile = response.json()
-        return jsonfile['access_token']
+def read_cellid() -> int:
+    response = requests.get('http://0.0.0.0:8000/cellid',
+                            headers=None,
+                            data=None
+                            )
 
-    def read_cellid(self, user_id) -> int:
-        """
-        retrieve the closest cell id given the user
-        :param user_id: string of user application id
-        :return: return the closest cell id
-        """
-        header = {}
-        response = requests.get('http://0.0.0.0:8000/cellid',
-                                headers=None,
-                                data=None
-                                )
+    return response.json()
 
-        return response.json()
-
-    def location_subscription(self, external_id):
-        """
-        retrieve the closest cell id given the user
-        :param user_id: string of user application id
-        :return: return the closest cell id
-        """
-
-        now = datetime.now()
-        tomorrow = timedelta(days=+1)
-        expiretime = now + tomorrow
-
-        header = {'Authorization': 'Bearer ' + self.token}
-        response = requests.post(
-            'http://localhost:8888/api/v1/3gpp-monitoring-event/v1/LocalizationNetApp/subscriptions',
-            headers=header,
-            data=json.dumps({
-                "externalId": external_id,
-                "notificationDestination": 'http://host.docker.internal:8000/monitoring/callback',
-                "monitoringType": "LOCATION_REPORTING",
-                "maximumNumberOfReports": 100,
-                "monitorExpireTime": expiretime.isoformat()
-            })
-        )
-
-        return response.json()
+def get_host_of_the_nef_emulator() -> str:
+    return "http://localhost:8888"

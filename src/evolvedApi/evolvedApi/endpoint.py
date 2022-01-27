@@ -18,7 +18,7 @@ class MonitoringType(str, Enum):
 
 class MonitoringEventReport(BaseModel):
     externalId: Optional[str] = Field("123456789@domain.com",
-                                      description="Globally unique identifier containing a Domain Identifier and a Local Identifier. \<Local Identifier\>@\<Domain Identifier\>")
+            description="Globally unique identifier containing a Domain Identifier and a Local Identifier. \<Local Identifier\>@\<Domain Identifier\>")
     monitoringType: MonitoringType
     locationInfo: Optional[LocationInfo] = None
     ipv4Addr: Optional[IPvAnyAddress] = Field(None, description="String identifying an Ipv4 address")
