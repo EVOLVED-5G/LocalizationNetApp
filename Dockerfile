@@ -54,6 +54,10 @@ RUN apt update \
   
 RUN pip3 install uvloop httptools uvicorn fastapi fastapi_utils evolved5g
 
+COPY pip_dependencies.txt /pip_dependencies.txt
+
+RUN pip3 install -r /pip_dependencies.txt
+
 COPY --from=cache_breaker_stage /evolved5g /evolved5g
 
 ########## BUILD STAGE ##########
