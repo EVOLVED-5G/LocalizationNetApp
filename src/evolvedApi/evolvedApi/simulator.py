@@ -2,6 +2,7 @@ from evolved5g import swagger_client
 from evolved5g.swagger_client import LoginApi, User
 from evolved5g.swagger_client.models import Token
 import requests, json
+import os
 
 
 def get_token() -> Token:
@@ -35,4 +36,4 @@ def read_cellid() -> int:
     return response.json()
 
 def get_host_of_the_nef_emulator() -> str:
-    return "http://localhost:8888"
+    return os.environ.get('NEF_HOST')
