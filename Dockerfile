@@ -73,8 +73,9 @@ FROM build_stage AS dev_stage
 
 COPY entrypoint/dev_entrypoint.sh /dev_entrypoint.sh
 
+ENV NEF_HOST="http://evol5-capif-nef.apps.ocp-epg.hi.inet"
 ENTRYPOINT ["/dev_entrypoint.sh"]
-ENV NEF_HOSTNAME="http://evol5-capif-nef.apps.ocp-epg.hi.inet"
+
 CMD tail -f /dev/null
 
 ########## PRODUCTION BUILD STAGE ##########
