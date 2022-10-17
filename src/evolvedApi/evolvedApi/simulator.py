@@ -28,12 +28,10 @@ def get_api_client(token) -> swagger_client.ApiClient:
     return api_client
 
 def read_cellid() -> int:
-    response = requests.get('http://0.0.0.0:8000/cellid',
-                            headers=None,
-                            data=None
-                            )
+    cellid_path = os.environ.get("NEF_HOST") + ":8000/cellid"
+    response = requests.get(cellid_path, headers=None, data=None)
 
     return response.json()
 
 def get_host_of_the_nef_emulator() -> str:
-    return os.environ.get('NEF_HOST')
+    return os.environ.get("NEF_HOST") + ":" + os.environ.get("NEF_PORT")

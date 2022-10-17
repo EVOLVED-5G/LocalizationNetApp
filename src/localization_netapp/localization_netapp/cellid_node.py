@@ -3,6 +3,7 @@ from evolved5g.sdk import LocationSubscriber
 import datetime
 import evolvedApi.simulator as simulator
 from std_msgs.msg import Int32
+import os
 
 
 class CellidNode(Node):
@@ -21,9 +22,9 @@ class CellidNode(Node):
         host = simulator.get_host_of_the_nef_emulator()
         token = simulator.get_token()
         self.location_subscriber = LocationSubscriber(host, token.access_token)
-        self.get_logger().info('Autantication Done!!')
+        self.get_logger().info('Authentication Done!!')
 
-        external_id = "10003@domain.com"
+        external_id = os.environ.get("UE_EXTERNAL_ID")
 
         # In this example we are running flask at http://localhost:5000 with a POST route to (/monitoring/callback) in order to retrieve notifications.
         # If you are running on the NEF emulator, you need to provide a notification_destination with an IP that the

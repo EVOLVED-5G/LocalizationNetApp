@@ -6,10 +6,10 @@ FROM  frozen_stage AS cache_breaker_stage
 
 # install CI dependencies
 RUN apt-get update && apt-get install -q -y \
-      ccache \
-      lcov \
-    && rosdep update \
-    && rm -rf /var/lib/apt/lists/*
+  ccache \
+  lcov \
+  && rosdep update \
+  && rm -rf /var/lib/apt/lists/*
 
 COPY src/localization_netapp /evolved5g/src/localization_netapp
 COPY src/evolvedApi /evolved5g/src/evolvedApi
@@ -28,7 +28,7 @@ COPY --from=cache_breaker_stage /rosdep_requirements.txt /rosdep_requirements.tx
 # Install Husarnet Client and deppendencies
 RUN apt-get install ca-certificates \
   && apt update -y && apt install -y curl gnupg2 systemd 
-  
+
 RUN apt update \
   && apt install -y --no-install-recommends --no-upgrade $(cat /rosdep_requirements.txt) ros-foxy-rmw-cyclonedds-cpp
 
@@ -51,7 +51,7 @@ RUN apt update \
   python3-tk \
   python3-pip \
   libyaml-cpp-dev 
-  
+
 RUN pip3 install uvloop httptools uvicorn fastapi fastapi_utils evolved5g
 
 COPY pip_dependencies.txt /pip_dependencies.txt
@@ -72,6 +72,10 @@ RUN . /opt/ros/foxy/setup.sh \
 FROM build_stage AS dev_stage
 
 COPY entrypoint/dev_entrypoint.sh /dev_entrypoint.sh
+
+ENV NEF_HOST="http://nef.apps.ocp-epg.hi.inet/"
+ENV NEF_PORT="8888"
+ENV UE_EXTERNAL_ID="10003@domain.com"
 
 ENTRYPOINT ["/dev_entrypoint.sh"]
 CMD tail -f /dev/null
