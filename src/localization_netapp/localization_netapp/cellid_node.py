@@ -18,7 +18,7 @@ class CellidNode(Node):
         self.timer = self.create_timer(self.timer_period, self.timer_callback)
         # Create a subscription, that will notify us 1000 times, for the next 1 day starting from now
         expire_time = (datetime.datetime.utcnow() + datetime.timedelta(days=1)).isoformat() + "Z"
-        self.netapp_id = "LocalizationNetapp"
+        self.netapp_id = "LocalizationNetApp"
         host = simulator.get_host_of_the_nef_emulator()
         token = simulator.get_token()
         self.location_subscriber = LocationSubscriber(host, token.access_token)
