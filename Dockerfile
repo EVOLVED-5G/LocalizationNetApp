@@ -52,7 +52,7 @@ RUN apt update \
   python3-pip \
   libyaml-cpp-dev 
 
-RUN pip3 install uvloop httptools uvicorn fastapi fastapi_utils evolved5g
+RUN pip3 install uvloop httptools uvicorn fastapi fastapi_utils 
 
 COPY pip_dependencies.txt /pip_dependencies.txt
 
