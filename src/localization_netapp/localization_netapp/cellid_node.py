@@ -56,6 +56,8 @@ class CellidNode(Node):
     def timer_callback(self):
         msg = Int32()
         cell_id = simulator.read_cellid()
+        print(cell_id)
+        print("Received CellId, of type:", type(cell_id))
         msg.data = cell_id
         self.publisher_.publish(msg)
         self.get_logger().info('Publishing: CellID "%s"' % msg.data)
