@@ -1,2 +1,3 @@
 typing-extensions==4.3.0
 click==8.0.1
+evolved5g==0.8.2
