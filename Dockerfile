@@ -52,8 +52,6 @@ RUN apt update \
   python3-pip \
   libyaml-cpp-dev 
 
-RUN pip3 install uvloop httptools uvicorn fastapi fastapi_utils 
-
 COPY pip_dependencies.txt /pip_dependencies.txt
 
 RUN pip3 install -r /pip_dependencies.txt
@@ -73,8 +71,9 @@ FROM build_stage AS dev_stage
 
 COPY entrypoint/dev_entrypoint.sh /dev_entrypoint.sh
 
-ENV NEF_HOST="http://nef.apps.ocp-epg.hi.inet/"
-ENV NEF_PORT="80"
+# Local configuration, to be set according to the NEF location
+ENV NEF_HOST="http://localhost"
+ENV NEF_PORT="8888"
 ENV CELLID_PORT="8000"
 ENV UE_EXTERNAL_ID="10003@domain.com"
 
