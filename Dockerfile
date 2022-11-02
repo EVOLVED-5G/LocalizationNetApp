@@ -74,7 +74,8 @@ FROM build_stage AS dev_stage
 COPY entrypoint/dev_entrypoint.sh /dev_entrypoint.sh
 
 ENV NEF_HOST="http://nef.apps.ocp-epg.hi.inet/"
-ENV NEF_PORT="8888"
+ENV NEF_PORT="80"
+ENV CELLID_PORT="8000"
 ENV UE_EXTERNAL_ID="10003@domain.com"
 
 ENTRYPOINT ["/dev_entrypoint.sh"]

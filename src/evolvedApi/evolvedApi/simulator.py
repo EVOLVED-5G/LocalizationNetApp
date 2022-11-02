@@ -32,7 +32,7 @@ def get_api_client(token) -> swagger_client.ApiClient:
 
 def read_cellid() -> int:
     cellid_path = (
-        os.environ.get("NEF_HOST") + ":" + os.environ.get("NEF_PORT") + "/cellid"
+        os.environ.get("NEF_HOST") + ":" + os.environ.get("CELLID_PORT") + "/cellid"
     )
     response = requests.get(cellid_path, headers=None, data=None)
 
