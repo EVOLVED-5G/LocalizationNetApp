@@ -11,18 +11,21 @@ class CellidNode(Node):
     This class is a ros node for testing the interaction with the NEF
     simulator api
     """
+
     def __init__(self):
-        super().__init__('cellid_node')
-        self.publisher_ = self.create_publisher(Int32, 'cellID', 10)
+        super().__init__("cellid_node")
+        self.publisher_ = self.create_publisher(Int32, "cellID", 10)
         self.timer_period = 0.5  # seconds
         self.timer = self.create_timer(self.timer_period, self.timer_callback)
         # Create a subscription, that will notify us 1000 times, for the next 1 day starting from now
-        expire_time = (datetime.datetime.utcnow() + datetime.timedelta(days=1)).isoformat() + "Z"
-        self.netapp_id = "LocalizationNetApp"
+        expire_time = (
+            datetime.datetime.utcnow() + datetime.timedelta(days=1)
+        ).isoformat() + "Z"
+        self.netapp_id = "LocalizationNetapp"
         host = simulator.get_host_of_the_nef_emulator()
         token = simulator.get_token()
         self.location_subscriber = LocationSubscriber(host, token.access_token)
-        self.get_logger().info('Authentication Done!!')
+        self.get_logger().info("Authentication Done!!")
 
         external_id = os.environ.get("UE_EXTERNAL_ID")
 
@@ -38,7 +41,7 @@ class CellidNode(Node):
             external_id=external_id,
             notification_destination="http://host.docker.internal:8000/monitoring/callback",
             maximum_number_of_reports=1000,
-            monitor_expire_time=expire_time
+            monitor_expire_time=expire_time,
         )
 
         # From now on we should retrieve POST notifications to http://host.docker.internal:8000/monitoring/callback
@@ -47,7 +50,7 @@ class CellidNode(Node):
 
     def destroy_node(self):
         id = self.subscription.link.split("/")[-1]
-        self.location_subscriber.delete_subscription(self.netapp_id,id)
+        self.location_subscriber.delete_subscription(self.netapp_id, id)
         return super().destroy_node()
 
     def timer_callback(self):

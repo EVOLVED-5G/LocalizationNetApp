@@ -16,7 +16,9 @@ def get_token() -> Token:
     api_client = swagger_client.ApiClient(configuration=configuration)
     api_client.select_header_content_type(["application/x-www-form-urlencoded"])
     api = LoginApi(api_client)
-    token = api.login_access_token_api_v1_login_access_token_post("", username, password, "", "", "")
+    token = api.login_access_token_api_v1_login_access_token_post(
+        "", username, password, "", "", ""
+    )
     return token
 
 
@@ -27,11 +29,15 @@ def get_api_client(token) -> swagger_client.ApiClient:
     api_client = swagger_client.ApiClient(configuration=configuration)
     return api_client
 
+
 def read_cellid() -> int:
-    cellid_path = os.environ.get("NEF_HOST") + ":8000/cellid"
+    cellid_path = (
+        os.environ.get("NEF_HOST") + ":" + os.environ.get("NEF_PORT") + "/cellid"
+    )
     response = requests.get(cellid_path, headers=None, data=None)
 
     return response.json()
+
 
 def get_host_of_the_nef_emulator() -> str:
     return os.environ.get("NEF_HOST") + ":" + os.environ.get("NEF_PORT")
