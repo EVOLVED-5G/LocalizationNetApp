@@ -18,7 +18,7 @@ class CellidNode(Node):
         publisher_topic_name = "cell_id_" + external_id[0:5]
         self.publisher_ = self.create_publisher(Int32, publisher_topic_name, 10)
         self.timer_period = 0.5  # seconds
-        self.timer = self.create_timer(self.timer_period, self.timer_callback)
+        # self.timer = self.create_timer(self.timer_period, self.timer_callback)
         # Create a subscription, that will notify us 1000 times, for the next 1 day starting from now
         expire_time = (
             datetime.datetime.utcnow() + datetime.timedelta(days=1)
@@ -39,7 +39,7 @@ class CellidNode(Node):
         self.subscription = self.location_subscriber.create_subscription(
             netapp_id=self.netapp_id,
             external_id=external_id,
-            notification_destination="http://host.docker.internal:8000/monitoring/callback",
+            notification_destination=os.environ.get("NETAPP_HOST")+ ":"+ os.environ.get("NETAPP_PORT") + "/monitoring/callback",
             maximum_number_of_reports=1000,
             monitor_expire_time=expire_time,
         )

@@ -41,12 +41,16 @@ class netapp_endpoint:
     @netapp_router.post("/monitoring/callback")
     def fill_cellid(self, item: MonitoringNotification, request: Request):
         global cellid
+        print("----- Received cellid change -----")
+        print(item.locationInfo.cellId)
         cellid = int(item.locationInfo.cellId[-1])
         return {'ack': 'TRUE'}
 
     @netapp_router.get("/cellid")
     def get_cellid(self,request: Request):
         global cellid
+        print("Got cellid")
+        print(cellid)
         return cellid
 
 
