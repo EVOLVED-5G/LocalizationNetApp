@@ -14,7 +14,9 @@ class CellidNode(Node):
 
     def __init__(self):
         super().__init__("cellid_node")
-        self.publisher_ = self.create_publisher(Int32, "cellID", 10)
+        external_id = os.environ.get("UE_EXTERNAL_ID")
+        publisher_topic_name = "cell_id_" + external_id[0:5]
+        self.publisher_ = self.create_publisher(Int32, publisher_topic_name, 10)
         self.timer_period = 0.5  # seconds
         self.timer = self.create_timer(self.timer_period, self.timer_callback)
         # Create a subscription, that will notify us 1000 times, for the next 1 day starting from now
@@ -26,8 +28,6 @@ class CellidNode(Node):
         token = simulator.get_token()
         self.location_subscriber = LocationSubscriber(host, token.access_token)
         self.get_logger().info("Authentication Done!!")
-
-        external_id = os.environ.get("UE_EXTERNAL_ID")
 
         # In this example we are running flask at http://localhost:5000 with a POST route to (/monitoring/callback) in order to retrieve notifications.
         # If you are running on the NEF emulator, you need to provide a notification_destination with an IP that the
@@ -45,7 +45,6 @@ class CellidNode(Node):
         )
 
         # From now on we should retrieve POST notifications to http://host.docker.internal:8000/monitoring/callback
-
         print(self.subscription)
 
     def destroy_node(self):
