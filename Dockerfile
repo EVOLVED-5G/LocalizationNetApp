@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -q -y \
   && rosdep update \
   && rm -rf /var/lib/apt/lists/*
 
+COPY src/cfg /evolved5g/cfg
 COPY src/localization_netapp /evolved5g/src/localization_netapp
 COPY src/evolvedApi /evolved5g/src/evolvedApi
 
@@ -72,9 +73,9 @@ FROM build_stage AS dev_stage
 COPY entrypoint/dev_entrypoint.sh /dev_entrypoint.sh
 
 # Local configuration, to be set according to the NEF location
-ENV NEF_HOST="http://localhost"
+ENV NEF_IP="host.docker.internal"
 ENV NEF_PORT="8888"
-ENV NETAPP_HOST="http://host.docker.internal"
+ENV NETAPP_IP="172.18.0.21"
 ENV NETAPP_PORT="8000"
 ENV UE_EXTERNAL_ID="10003@domain.com"
 
