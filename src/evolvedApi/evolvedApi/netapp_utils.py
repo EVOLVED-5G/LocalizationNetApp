@@ -22,26 +22,26 @@ class Utils:
         self.nef_ip = os.environ.get("NEF_IP")
         self.nef_port = os.environ.get("NEF_PORT")
         self.ue_external_id = os.environ.get("UE_EXTERNAL_ID")
-        self.netapp_host = os.environ.get("NETAPP_IP")
+        self.netapp_ip = os.environ.get("NETAPP_IP")
         self.netapp_port = os.environ.get("NETAPP_PORT")
         self.netapp_id = config.get("configs", "netapp_id")
         self.capif_callback_ip = config.get("configs", "capif_callback_ip")
         self.capif_callback_port = config.get("configs", "capif_callback_port")
         self.certificates_folder = config.get("configs", "certificates_folder")
-        self.capif_host = config.get("configs", "capif_host")
-        self.capif_https_port = config.get("configs", "capif_https_port")
+        self.capif_host = os.environ.get("CAPIF_HOST")
+        self.capif_https_port = os.environ.get("CAPIF_HTTPS_PORT")
 
         print("================================================")
         print("Starting NetApp with the following configuration:")
         print("================================================")
         print("NEF_IP:", self.nef_ip)
         print("UE_EXTERNAL_ID:", self.ue_external_id)
-        print("NETAPP_IP:", self.netapp_host)
+        print("NETAPP_IP:", self.netapp_ip)
         print("NETAPP_PORT:", self.netapp_port)
         print("NETAPP_ID:", self.netapp_id)
         print("CERTIFICATES_FOLDER:", self.certificates_folder)
         print("CAPIF_HOST:", self.capif_host)
-        print("CAPIF_PORT:", self.capif_https_port)
+        print("CAPIF_HTTPS_PORT:", self.capif_https_port)
         print("================================================")
 
     def get_token(self) -> Token:
@@ -69,7 +69,7 @@ class Utils:
         return "http://{}:{}".format(self.nef_ip, self.nef_port)
 
     def get_host_of_the_netapp(self) -> str:
-        return "http://{}:{}/nefcallbacks".format(self.netapp_id, self.netapp_port)
+        return "http://{}:{}/monitoring/callback".format(self.netapp_ip, self.netapp_port)
 
 def read_cellid() -> int:
     cellid_path = (

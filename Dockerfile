@@ -75,8 +75,11 @@ COPY entrypoint/dev_entrypoint.sh /dev_entrypoint.sh
 # Local configuration, to be set according to the NEF location
 ENV NEF_IP="host.docker.internal"
 ENV NEF_PORT="8888"
-ENV NETAPP_IP="172.18.0.21"
+ENV NETAPP_IP="172.18.0.20"
 ENV NETAPP_PORT="8000"
+ENV CAPIF_HOST="capifcore"
+ENV CAPIF_HTTP_PORT="8080"
+ENV CAPIF_HTTPS_PORT="443"
 ENV UE_EXTERNAL_ID="10003@domain.com"
 
 ENTRYPOINT ["/dev_entrypoint.sh"]
