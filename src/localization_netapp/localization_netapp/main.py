@@ -1,6 +1,6 @@
 import rclpy
 from .cellid_node import CellidNode
-from evolvedApi import endpoint as ep
+from evolvedApi import webserver
 from multiprocessing import Process
 import uvicorn
 import time
@@ -9,7 +9,7 @@ import time
 def main():
     rclpy.init(args=None)
     proc = Process(target=uvicorn.run,
-                        args=(ep.app,),
+                        args=(webserver.app,),
                         kwargs={
                             "host": "0.0.0.0"},
                         daemon=True)
