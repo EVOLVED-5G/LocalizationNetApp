@@ -51,7 +51,8 @@ RUN apt update \
   python3-dev \
   python3-tk \
   python3-pip \
-  libyaml-cpp-dev 
+  libyaml-cpp-dev \
+  jq
 
 COPY pip_dependencies.txt /pip_dependencies.txt
 
@@ -73,13 +74,15 @@ FROM build_stage AS dev_stage
 COPY entrypoint/dev_entrypoint.sh /dev_entrypoint.sh
 
 # Local configuration, to be set according to the NEF location
-ENV NEF_IP="host.docker.internal"
-ENV NEF_PORT="8888"
-ENV NETAPP_IP="172.18.0.20"
-ENV NETAPP_PORT="8000"
-ENV CAPIF_HOST="capifcore"
-ENV CAPIF_HTTP_PORT="8080"
-ENV CAPIF_HTTPS_PORT="443"
+ENV NEF_ADDRESS="host.docker.internal:8888"
+ENV NEF_USER="admin@my-email.com"
+ENV NEF_PASSWORD="pass"
+ENV VAPP_ADDRESS=
+ENV PATH_TO_CERTS="/evolved5g/cfg/capif_onboarding"
+ENV CAPIF_HOSTNAME="capifcore"
+ENV CAPIF_PORT_HTTP="8080"
+ENV CAPIF_PORT_HTTPS="443"
+ENV CALLBACK_ADDRESS="172.18.0.20:8000"
 ENV UE_EXTERNAL_ID="10003@domain.com"
 
 ENTRYPOINT ["/dev_entrypoint.sh"]

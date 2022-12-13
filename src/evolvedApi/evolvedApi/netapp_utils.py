@@ -17,27 +17,24 @@ class Utils:
             config.read(configFilePath)
         except Exception as e :
             print(str(e))
-        self.nef_username = config.get("configs", "nef_user")
-        self.nef_pass = config.get("configs", "nef_pass")
-        self.nef_ip = os.environ.get("NEF_IP")
-        self.nef_port = os.environ.get("NEF_PORT")
+        self.nef_username = os.environ.get("NEF_USER")
+        self.nef_pass =  os.environ.get("NEF_PASSWORD")
+        self.nef_address = os.environ.get("NEF_ADDRESS")
         self.ue_external_id = os.environ.get("UE_EXTERNAL_ID")
-        self.netapp_ip = os.environ.get("NETAPP_IP")
-        self.netapp_port = os.environ.get("NETAPP_PORT")
+        self.callback_adddress = os.environ.get("CALLBACK_ADDRESS")
         self.netapp_id = config.get("configs", "netapp_id")
         self.capif_callback_ip = config.get("configs", "capif_callback_ip")
         self.capif_callback_port = config.get("configs", "capif_callback_port")
-        self.certificates_folder = config.get("configs", "certificates_folder")
-        self.capif_host = os.environ.get("CAPIF_HOST")
-        self.capif_https_port = os.environ.get("CAPIF_HTTPS_PORT")
+        self.certificates_folder = os.environ.get("PATH_TO_CERTS")
+        self.capif_host = os.environ.get("CAPIF_HOSTNAME")
+        self.capif_https_port = os.environ.get("CAPIF_PORT_HTTPS")
 
         print("================================================")
         print("Starting NetApp with the following configuration:")
         print("================================================")
-        print("NEF_IP:", self.nef_ip)
+        print("NEF_ADDRESS:", self.nef_address)
         print("UE_EXTERNAL_ID:", self.ue_external_id)
-        print("NETAPP_IP:", self.netapp_ip)
-        print("NETAPP_PORT:", self.netapp_port)
+        print("CALLBACK_ADDRESS:", self.callback_adddress)
         print("NETAPP_ID:", self.netapp_id)
         print("CERTIFICATES_FOLDER:", self.certificates_folder)
         print("CAPIF_HOST:", self.capif_host)
@@ -66,14 +63,14 @@ class Utils:
 
 
     def get_host_of_the_nef_emulator(self) -> str:
-        return "http://{}:{}".format(self.nef_ip, self.nef_port)
+        return "http://{}".format(self.nef_address)
 
     def get_host_of_the_netapp(self) -> str:
-        return "http://{}:{}/monitoring/callback".format(self.netapp_ip, self.netapp_port)
+        return "http://{}/monitoring/callback".format(self.callback_adddress)
 
 def read_cellid() -> int:
     cellid_path = (
-        "http://localhost:" + os.environ.get("NETAPP_PORT") + "/cellid"
+        "http://localhost:8000" + "/cellid"
     )
     response = requests.get(cellid_path, headers=None, data=None)
 
