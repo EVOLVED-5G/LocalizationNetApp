@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -q -y \
   && rosdep update \
   && rm -rf /var/lib/apt/lists/*
 
+COPY src/cfg /evolved5g/cfg
 COPY src/localization_netapp /evolved5g/src/localization_netapp
 COPY src/evolvedApi /evolved5g/src/evolvedApi
 
@@ -19,8 +20,8 @@ RUN . /opt/ros/foxy/setup.sh \
   xargs rosdep resolve --rosdistro foxy | \
   awk '/#apt/{getline; print}' > /rosdep_requirements.txt
 
-WORKDIR /evolved5g
-RUN mkdir -p cfg/capif_onboarding
+WORKDIR /evolved5g/cfg
+RUN mkdir capif_onboarding
 
 ########## BASE STAGE ##########
 FROM frozen_stage AS base_stage
