@@ -20,6 +20,8 @@ RUN . /opt/ros/foxy/setup.sh \
   xargs rosdep resolve --rosdistro foxy | \
   awk '/#apt/{getline; print}' > /rosdep_requirements.txt
 
+WORKDIR /evolved5g/cfg
+RUN mkdir capif_onboarding
 
 ########## BASE STAGE ##########
 FROM frozen_stage AS base_stage
