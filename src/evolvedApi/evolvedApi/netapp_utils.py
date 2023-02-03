@@ -21,7 +21,7 @@ class Utils:
         self.nef_pass =  os.environ.get("NEF_PASSWORD")
         self.nef_address = os.environ.get("NEF_ADDRESS")
         self.ue_external_id = os.environ.get("UE_EXTERNAL_ID")
-        self.callback_adddress = os.environ.get("CALLBACK_ADDRESS")
+        self.callback_address = os.environ.get("CALLBACK_ADDRESS")
         self.netapp_id = config.get("configs", "netapp_id")
         self.capif_callback_ip = config.get("configs", "capif_callback_ip")
         self.capif_callback_port = config.get("configs", "capif_callback_port")
@@ -34,7 +34,7 @@ class Utils:
         print("================================================")
         print("NEF_ADDRESS:", self.nef_address)
         print("UE_EXTERNAL_ID:", self.ue_external_id)
-        print("CALLBACK_ADDRESS:", self.callback_adddress)
+        print("CALLBACK_ADDRESS:", self.callback_address)
         print("NETAPP_ID:", self.netapp_id)
         print("CERTIFICATES_FOLDER:", self.certificates_folder)
         print("CAPIF_HOST:", self.capif_host)
@@ -66,7 +66,7 @@ class Utils:
         return "http://{}".format(self.nef_address)
 
     def get_host_of_the_netapp(self) -> str:
-        return "http://{}/monitoring/callback".format(self.callback_adddress)
+        return "http://{}/monitoring/callback".format(self.callback_address)
 
 def read_cellid() -> int:
     cellid_path = (
