@@ -76,7 +76,7 @@ FROM build_stage AS dev_stage
 COPY entrypoint/dev_entrypoint.sh /dev_entrypoint.sh
 
 # Local configuration, to be set according to the NEF location
-ENV NEF_ADDRESS="host.docker.internal:8888"
+ENV NEF_ADDRESS="host.docker.internal:4443"
 ENV NEF_USER="admin@my-email.com"
 ENV NEF_PASSWORD="pass"
 ENV VAPP_ADDRESS=
@@ -84,8 +84,9 @@ ENV PATH_TO_CERTS="/evolved5g/cfg/capif_onboarding"
 ENV CAPIF_HOSTNAME="capifcore"
 ENV CAPIF_PORT_HTTP="8080"
 ENV CAPIF_PORT_HTTPS="443"
-ENV CALLBACK_ADDRESS="172.18.0.20:8000"
+ENV CALLBACK_ADDRESS="localization:8000"
 ENV UE_EXTERNAL_ID="10003@domain.com"
+ENV CAPIF_USERNAME="user300"
 
 ENTRYPOINT ["/dev_entrypoint.sh"]
 CMD tail -f /dev/null

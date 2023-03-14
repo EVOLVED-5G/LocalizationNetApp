@@ -44,6 +44,7 @@ class Utils:
     def get_token(self) -> Token:
         configuration = swagger_client.Configuration()
         configuration.host = self.get_host_of_the_nef_emulator()
+        configuration.verify_ssl = False
         api_client = swagger_client.ApiClient(configuration=configuration)
         api_client.select_header_content_type(["application/x-www-form-urlencoded"])
         api = LoginApi(api_client)
@@ -63,7 +64,7 @@ class Utils:
 
 
     def get_host_of_the_nef_emulator(self) -> str:
-        return "http://{}".format(self.nef_address)
+        return "https://{}".format(self.nef_address)
 
     def get_host_of_the_netapp(self) -> str:
         return "http://{}/monitoring/callback".format(self.callback_address)
