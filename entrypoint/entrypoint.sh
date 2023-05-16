@@ -1,11 +1,8 @@
 #!/bin/bash
 set -e
 
-source "/opt/ros/foxy/setup.bash"
+source "/ros_entrypoint.sh"
 source "/evolved5g/install/setup.bash"
-
-#export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-#export CYCLONEDDS_URI=file:///umd2_ws/install/umd_utils/share/umd_utils/cfg/$NETWORK.xml
 
 echo "172.17.0.1      capifcore" >> /etc/hosts
 

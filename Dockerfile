@@ -73,7 +73,8 @@ RUN . /opt/ros/foxy/setup.sh \
 ########## DEV STAGE ##########
 FROM build_stage AS dev_stage
 
-COPY entrypoint/dev_entrypoint.sh /dev_entrypoint.sh
+COPY entrypoint/entrypoint.sh /entrypoint.sh
+COPY entrypoint/ros_entrypoint.sh /ros_entrypoint.sh
 
 # Local configuration, to be set according to the NEF location
 ENV NEF_ADDRESS="host.docker.internal:4443"
@@ -88,8 +89,10 @@ ENV CALLBACK_ADDRESS="localization:8000"
 ENV UE_EXTERNAL_ID_1="10003@domain.com"
 ENV UE_EXTERNAL_ID_2="10002@domain.com"
 ENV CAPIF_USERNAME="user300"
+ENV NETWORK="local"
+ENV ROS_DOMAIN_ID="1"
 
-ENTRYPOINT ["/dev_entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 CMD tail -f /dev/null
 
 ########## PRODUCTION BUILD STAGE ##########
