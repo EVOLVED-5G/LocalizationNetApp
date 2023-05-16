@@ -3,8 +3,9 @@ from evolved5g.swagger_client import LoginApi, User
 from evolved5g.swagger_client.models import Token
 import requests, json
 import os
-import configparser 
+import configparser
 import json
+
 
 class Utils:
     def __init__(self) -> None:
@@ -12,15 +13,16 @@ class Utils:
 
     def get_configs(self):
         config = configparser.RawConfigParser()
-        configFilePath = '/evolved5g/cfg/netapp.properties'
+        configFilePath = "/evolved5g/cfg/netapp.properties"
         try:
             config.read(configFilePath)
-        except Exception as e :
+        except Exception as e:
             print(str(e))
         self.nef_username = os.environ.get("NEF_USER")
-        self.nef_pass =  os.environ.get("NEF_PASSWORD")
+        self.nef_pass = os.environ.get("NEF_PASSWORD")
         self.nef_address = os.environ.get("NEF_ADDRESS")
-        self.ue_external_id = os.environ.get("UE_EXTERNAL_ID")
+        self.ue_external_id_1 = os.environ.get("UE_EXTERNAL_ID_1")
+        self.ue_external_id_2 = os.environ.get("UE_EXTERNAL_ID_2")
         self.callback_address = os.environ.get("CALLBACK_ADDRESS")
         self.netapp_id = config.get("configs", "netapp_id")
         self.capif_callback_ip = config.get("configs", "capif_callback_ip")
@@ -33,7 +35,8 @@ class Utils:
         print("Starting NetApp with the following configuration:")
         print("================================================")
         print("NEF_ADDRESS:", self.nef_address)
-        print("UE_EXTERNAL_ID:", self.ue_external_id)
+        print("UE_EXTERNAL_ID_1:", self.ue_external_id_1)
+        print("UE_EXTERNAL_ID_2:", self.ue_external_id_2)
         print("CALLBACK_ADDRESS:", self.callback_address)
         print("NETAPP_ID:", self.netapp_id)
         print("CERTIFICATES_FOLDER:", self.certificates_folder)
@@ -54,14 +57,12 @@ class Utils:
         print("NEF Token: {}\n".format(token.access_token))
         return token
 
-
-    def get_api_client(token,self) -> swagger_client.ApiClient:
+    def get_api_client(token, self) -> swagger_client.ApiClient:
         configuration = swagger_client.Configuration()
         configuration.host = self.get_host_of_the_nef_emulator()
         configuration.access_token = token.access_token
         api_client = swagger_client.ApiClient(configuration=configuration)
         return api_client
-
 
     def get_host_of_the_nef_emulator(self) -> str:
         return "https://{}".format(self.nef_address)
@@ -69,12 +70,16 @@ class Utils:
     def get_host_of_the_netapp(self) -> str:
         return "http://{}/monitoring/callback".format(self.callback_address)
 
-def read_cellid() -> int:
-    cellid_path = (
-        "http://localhost:8000" + "/cellid"
-    )
+
+def read_cellid_user_1() -> int:
+    cellid_path = "http://localhost:8000" + "/cellid_user_1"
     response = requests.get(cellid_path, headers=None, data=None)
 
     return response.json()
 
 
+def read_cellid_user_2() -> int:
+    cellid_path = "http://localhost:8000" + "/cellid_user_2"
+    response = requests.get(cellid_path, headers=None, data=None)
+
+    return response.json()
