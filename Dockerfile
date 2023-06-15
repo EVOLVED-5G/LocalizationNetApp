@@ -91,6 +91,7 @@ ENV UE_EXTERNAL_ID_2="10002@domain.com"
 ENV CAPIF_USERNAME="user300"
 ENV NETWORK="local"
 ENV ROS_DOMAIN_ID="1"
+ENV ENVIRONMENT="development"
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD tail -f /dev/null

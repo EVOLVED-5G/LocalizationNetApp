@@ -40,7 +40,6 @@ class CellidNode(Node):
         token = utils.get_token()
         self.location_subscriber = LocationSubscriber(
             host,
-            token.access_token,
             utils.certificates_folder,
             utils.capif_host,
             utils.capif_https_port,
