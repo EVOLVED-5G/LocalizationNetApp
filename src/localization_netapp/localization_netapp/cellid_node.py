@@ -17,6 +17,7 @@ class CellidNode(Node):
 
         # Initialize Utils class and get configs
         utils = netapp_utils.Utils()
+        utils.get_configs()
 
         # Create ROS publisher
         publisher_topic_name_user_1 = "cell_id_" + utils.ue_external_id_1[0:5]

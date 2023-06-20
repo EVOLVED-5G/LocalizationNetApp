@@ -21,6 +21,7 @@ class Utils:
         self.nef_username = os.environ.get("NEF_USER")
         self.nef_pass = os.environ.get("NEF_PASSWORD")
         self.nef_address = os.environ.get("NEF_ADDRESS")
+        self.nef_port = os.environ.get("NEF_PORT")
         self.ue_external_id_1 = os.environ.get("UE_EXTERNAL_ID_1")
         self.ue_external_id_2 = os.environ.get("UE_EXTERNAL_ID_2")
         self.callback_address = os.environ.get("CALLBACK_ADDRESS")
@@ -35,6 +36,7 @@ class Utils:
         print("Starting NetApp with the following configuration:")
         print("================================================")
         print("NEF_ADDRESS:", self.nef_address)
+        print("NEF_PORT:", self.nef_port)
         print("UE_EXTERNAL_ID_1:", self.ue_external_id_1)
         print("UE_EXTERNAL_ID_2:", self.ue_external_id_2)
         print("CALLBACK_ADDRESS:", self.callback_address)
@@ -51,6 +53,7 @@ class Utils:
         api_client = swagger_client.ApiClient(configuration=configuration)
         api_client.select_header_content_type(["application/x-www-form-urlencoded"])
         api = LoginApi(api_client)
+        print("Trying to get NEF token on nef host:", configuration.host)
         token = api.login_access_token_api_v1_login_access_token_post(
             "", self.nef_username, self.nef_pass, "", "", ""
         )
@@ -65,7 +68,7 @@ class Utils:
         return api_client
 
     def get_host_of_the_nef_emulator(self) -> str:
-        return "https://{}".format(self.nef_address)
+        return "https://{}:{}".format(self.nef_address, self.nef_port)
 
     def get_host_of_the_netapp(self) -> str:
         return "http://{}/monitoring/callback".format(self.callback_address)
