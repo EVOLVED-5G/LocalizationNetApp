@@ -1,4 +1,7 @@
 #!/bin/bash
+
+sleep 180
+
 set -e
 
 source "/ros_entrypoint.sh"
