@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sleep 180
+#sleep 180
 
 set -e
 
