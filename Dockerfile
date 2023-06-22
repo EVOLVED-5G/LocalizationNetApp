@@ -78,7 +78,7 @@ COPY entrypoint/ros_entrypoint.sh /ros_entrypoint.sh
 
 # Local configuration, to be set according to the NEF location
 ENV NEF_ADDRESS="host.docker.internal"
-ENV NEF_PORT="443"
+ENV NEF_PORT="4443"
 ENV NEF_USER="admin@my-email.com"
 ENV NEF_PASSWORD="pass"
 ENV VAPP_ADDRESS=

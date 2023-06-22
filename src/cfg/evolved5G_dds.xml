@@ -11,8 +11,6 @@
 		</General>
 		<Discovery>
 			<Peers>
-				<Peer address="10.11.23.138"/>
-				<Peer address="10.11.65.65"/>
 			</Peers>
 			<ParticipantIndex>auto</ParticipantIndex>
 			<MaxAutoParticipantIndex>5</MaxAutoParticipantIndex>
