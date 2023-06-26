@@ -4,16 +4,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
 	<Domain Id="any">
 		<General>
-			<NetworkInterfaceAddress>auto</NetworkInterfaceAddress>
+			<NetworkInterfaceAddress>${DDS_IFACE}</NetworkInterfaceAddress>
 			<AllowMulticast>false</AllowMulticast>
-			<MaxMessageSize>1400B</MaxMessageSize>
+			<MaxMessageSize>1200B</MaxMessageSize>
 			<Transport>udp</Transport>
+			<ExternalNetworkAddress>${DDS_EXTERNAL_ADDRESS}</ExternalNetworkAddress>
 		</General>
 		<Discovery>
-			<Peers>
-			</Peers>
-			<ParticipantIndex>auto</ParticipantIndex>
-			<MaxAutoParticipantIndex>5</MaxAutoParticipantIndex>
+			<Peers></Peers>
+			<ParticipantIndex>${DDS_PARTICIPANT_INDEX}</ParticipantIndex>
+			<MaxAutoParticipantIndex>${DDS_MAX_PARTICIPANT_INDEX}</MaxAutoParticipantIndex>
 		</Discovery>
 		<Internal>
 			<Watermarks>
