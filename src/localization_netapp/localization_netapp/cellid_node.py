@@ -56,7 +56,8 @@ class CellidNode(Node):
             monitor_expire_time=expire_time,
         )
         self.get_logger().info(
-            "Successfully subscribed to location monitoring for user 1"
+            "Successfully subscribed to location monitoring for %s"
+            % utils.ue_external_id_1
         )
         print(self.subscription_1)
 
@@ -69,7 +70,8 @@ class CellidNode(Node):
             monitor_expire_time=expire_time,
         )
         self.get_logger().info(
-            "Successfully subscribed to location monitoring for user 2"
+            "Successfully subscribed to location monitoring for %s"
+            % utils.ue_external_id_2
         )
         print(self.subscription_2)
 
