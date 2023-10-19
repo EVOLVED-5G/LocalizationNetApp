@@ -16,6 +16,11 @@ jq -r .capif_netapp_username=\"$CAPIF_USERNAME\" /evolved5g/cfg/capif_registrati
 
 evolved5g register-and-onboard-to-capif --config_file_full_path="/evolved5g/cfg/capif_registration.json" --environment="$ENVIRONMENT_MODE"
 
-exec ros2 run localization_netapp cellid_node
+if [ "$ENABLE_NEF_CALLBACKS" = "true" ]; then
+    exec ros2 run localization_netapp cellid_node
+else
+    echo "$ENABLE_NEF_CALLBACKS is set to False, NEF callbacks are not enabled!"
+fi
+
 
 exec "$@"

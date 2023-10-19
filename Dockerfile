@@ -100,6 +100,9 @@ ENV DDS_EXTERNAL_ADDRESS="10.11.23.49"
 ENV DDS_PARTICIPANT_INDEX="auto"
 ENV DDS_MAX_PARTICIPANT_INDEX="3"
 
+# Unable NEF callbacks for certification purposes
+ENV ENABLE_NEF_CALLBACKS=true
+
 ENTRYPOINT ["/entrypoint.sh"]
 CMD tail -f /dev/null
 
