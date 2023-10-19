@@ -1,0 +1,25 @@
+import rclpy
+from .cellid_node import CellidNode
+from evolvedApi import webserver
+from multiprocessing import Process
+import uvicorn
+import time
+
+
+def main():
+    rclpy.init(args=None)
+    proc = Process(target=uvicorn.run,
+                        args=(webserver.app,),
+                        kwargs={
+                            "host": "0.0.0.0"},
+                        daemon=True)
+    proc.start()
+    time.sleep(2)
+    node = CellidNode()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
